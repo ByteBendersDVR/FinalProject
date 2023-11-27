@@ -3,6 +3,8 @@ from App.database import db
 
 class Strategy(db.Model):
     
+    id = db.Column(db.Integer, primary_key=True)
+    
     @abstractmethod
     def choose_strategy(self):
         pass
