@@ -7,7 +7,7 @@ def addCoursetoHistory(studentid, code):
     if student:
         course = get_course_by_courseCode(code)
         if course:
-            completed = StudentCourseHistory(studentid, code)
+            completed = StudentCourseHistory(studentid, code, True)
             db.session.add(completed)
             db.session.commit()
         else:

@@ -6,6 +6,13 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username =  db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String(120), nullable=False)
+    user_type = db.Column(db.String(20), nullable=False)
+    
+    # Setting this up for single table inheritance for Superadmins, Students and Staff
+    __mapper_args__ = {
+        "polymorphic_identity": "superadmin",
+        "polymorphic_on": user_type,
+    }
 
     def __init__(self, username, password):
         self.username = username

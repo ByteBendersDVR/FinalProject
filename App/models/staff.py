@@ -6,10 +6,13 @@ class Staff(User):
     
     id = db.Column(db.String(10), db.ForeignKey('user.id'), primary_key=True)
     name = db.Column(db.String(50))
+    
+    __mapper_args__ = {
+        "polymorphic_identity": "staff"
+    }
 
-    def __init__(self, password, staff_id, name):
-        super().__init__(staff_id, password)
-        self.id = staff_id
+    def __init__(self, username, password, name):
+        super().__init__(username, password)
         self.name = name
 
     def get_json(self):

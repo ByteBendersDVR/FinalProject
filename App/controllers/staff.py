@@ -2,10 +2,11 @@ from App.models import Program, Course, Staff
 from App.database import db
 
 
-def create_staff(password, staff_id, name):
-    new_staff = Staff(password, staff_id, name)
+def create_staff(username, password, name):
+    new_staff = Staff(username, password, name)
     db.session.add(new_staff)
     db.session.commit()
+    print('Staff successfully created')
     return new_staff
 
 

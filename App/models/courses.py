@@ -1,5 +1,5 @@
 from App.database import db
-from App.models import prerequisites
+from .prerequisites import Prerequisites
 import json
 
 class Course(db.Model):
@@ -7,8 +7,9 @@ class Course(db.Model):
     courseName = db.Column(db.String(25))
     credits = db.Column(db.Integer)
     rating = db.Column(db.Integer)
+    #prerequisite_id = db.Column(db.ForeignKey('prerequisites.id'))
 
-    offered = db.relationship('CoursesOfferedPerSem', backref ='courses', lazy=True)
+    #offered = db.relationship('CoursesOfferedPerSem', backref ='courses', lazy=True)
     students = db.relationship('StudentCourseHistory', backref='courses', lazy=True)
     programs = db.relationship('ProgramCourses', backref='courses', lazy=True)
     prerequisites = db.relationship('Prerequisites', backref='courses', lazy = True)
