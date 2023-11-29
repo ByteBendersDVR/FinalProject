@@ -1,9 +1,11 @@
 from App.database import db
+
+
 class Prerequisites(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     prereq_courseCode = db.Column(db.ForeignKey('course.courseCode'))
-    courseName = db.Column(db.String(25))
+    courseName = db.Column(db.String(20))
 
     associated_course = db.relationship('Course', back_populates='prerequisites', overlaps="courses")
     

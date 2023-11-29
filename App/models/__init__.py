@@ -9,3 +9,5 @@ from .prerequisites import *
 from .studentCourseHistory import *
 from .coursePlanCourses import *
 from .coursePlan import *
+from .coursePlanGenerator import *
+from .strategy import *
