@@ -1,3 +1,5 @@
+# This is not used 
+""" 
 from App.models import CoursePlan
 from App.database import db 
 from App.controllers import (
@@ -276,3 +278,4 @@ def generator(Student, command):
             createPlanCourse(plan.planId, c)
 
     return courses
+"""

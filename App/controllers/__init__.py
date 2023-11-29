@@ -10,3 +10,8 @@ from .studentCourseHistory import *
 from .coursePlanCourses import *
 from .coursesOfferedPerSem import *
 from .coursePlan import *
+from .coursePlanGenerator import *
+from .fastestGraduationStrat import *
+from .easyCoursesStrat import *
+from .prioritiseElectivesStrat import *
+from .strategy import *
