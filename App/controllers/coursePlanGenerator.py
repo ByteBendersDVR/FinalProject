@@ -12,5 +12,5 @@ def setStrategy(planOption):
        CoursePlanGenerator.strategy = PrioritizeElectives()
 
 # not even sure if we need this
-def generateCoursePlan(programme):
+def generateCoursePlan(student, command, programme_id):
    """ call strategy's generateCoursePlan """

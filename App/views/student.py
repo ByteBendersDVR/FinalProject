@@ -15,8 +15,7 @@ from App.controllers import (
     get_course_by_courseCode,
     addCoursetoHistory,
     getCompletedCourseCodes,
-    generator,
-    addCourseToPlan,
+    generateCoursePlan,
     verify_student
 )
 
@@ -97,15 +96,16 @@ def create_student_plan_route():
     valid_command = ["electives", "easy", "fastest"]
 
     if command in valid_command:
-        courses = generator(student, command)
+        courses = generateCoursePlan(student, command, student.program_id)
         return jsonify({'Success!': f"{command} plan added to student {student_id} ", "courses" : courses}), 200
 
-    course = get_course_by_courseCode(command)
-    if course:
-        addCourseToPlan(student, command)
-        return jsonify({'Success!': f"Course {command} added to student {student_id} plan"}), 200
+    #I don't think we need this
+    # course = get_course_by_courseCode(command)
+    # if course:
+    #     addCourseToPlan(student, command)
+    #     return jsonify({'Success!': f"Course {command} added to student {student_id} plan"}), 200
     
-    return jsonify("Invalid command. Please enter 'electives', 'easy', 'fastest', or a valid course code."), 400
+    return jsonify("Invalid command. Please enter 'electives', 'easy' or 'fastest'"), 400
 
 
 

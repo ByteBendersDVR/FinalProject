@@ -26,9 +26,8 @@ from App.controllers import (
     addCoursetoHistory,
     getCompletedCourseCodes,
     get_allCore,
-    addCourseToPlan,
-    get_student_by_id,
-    generator
+    generateCoursePlan,
+    get_student_by_id
     )
 
 test1 = ["COMP1600",  "COMP1601", "COMP1602", "COMP1603", "COMP1604", "MATH1115", "INFO1600", "INFO1601",  "FOUN1101", "FOUN1105", "FOUN1301", "COMP3605", "COMP3606", "COMP3607", "COMP3608",]

@@ -16,8 +16,5 @@ class Staff(User):
         self.name = name
 
     def get_json(self):
-        return{
-            'staff_id': self.id,
-            'name': self.name,
-        }
+        return super().get_json()
 
