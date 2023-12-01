@@ -16,7 +16,9 @@ from App.controllers import (
     addSemesterCourses,
     get_all_OfferedCodes,
     get_all_programCourses,
-    verify_staff
+    verify_staff,
+    get_course_by_courseCode,
+    create_prereq
 )
 
 staff_views = Blueprint('staff_views', __name__, template_folder='../templates')
@@ -68,7 +70,7 @@ def addProgram():
      return jsonify({'message': "Program creation unsucessful"}), 400
 
 
-@staff_views.route('/programRequirement', methods=['POST'])
+@staff_views.route('/staff/programRequirement', methods=['POST'])
 @login_required
 def addProgramRequirements():
   data=request.json
@@ -105,6 +107,21 @@ def addProgramRequirements():
   response=create_programCourse(name, code, num)
   return jsonify({'message': response.get_json()}), 200
 
+@staff_views.route('/staff/addPrequisite', methods=['POST'])
+@login_required
+def addPrereq():
+  data=request.json
+  course_code = data['course_code']
+  prereq_code = data['prequisite']
+  
+  course=get_course_by_courseCode(course_code)
+  prequisite=get_course_by_courseCode(prereq_code)
+  
+  if not course or prequisite:
+    return jsonify({'message': 'Invalid course code'}), 400
+  
+  create_prereq(prereq_code,course.courseName)
+  return jsonify({'message': 'Prerequisite added successfully'}), 200
 
 @staff_views.route('/staff/addOfferedCourse', methods=['POST'])
 @login_required
