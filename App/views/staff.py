@@ -18,7 +18,8 @@ from App.controllers import (
     get_all_programCourses,
     verify_staff,
     get_course_by_courseCode,
-    create_prereq
+    create_prereq,
+    get_program_by_name
 )
 
 staff_views = Blueprint('staff_views', __name__, template_folder='../templates')
@@ -28,7 +29,7 @@ staff_views = Blueprint('staff_views', __name__, template_folder='../templates')
 def getOfferedCourses():
   username=current_user.username
   if not verify_staff(username):    #verify that the user is staff
-    return jsonify({'message': 'You are unauthorized to perform this action. Please login with Staff credentials.'}), 401
+    return jsonify({'message': f'{username} is unauthorized to perform this action. Please login with Staff credentials.'}), 401
 
   listing=get_all_OfferedCodes()
   return jsonify({'message':'Success', 'offered_courses':listing}), 200
@@ -47,12 +48,16 @@ def addProgram():
     return jsonify({'message': 'You are unauthorized to perform this action. Please login with Staff credentials.'}), 401
 
   #get all programs and check to see if it already exists
-  programs=Program.query.all()
-  programNames=[]
-  for p in programs:
-    programNames.append(p.name)
-  if name in programNames:
-    return jsonify({'message': 'Program already exists'}), 400
+  program = Program.query.filter_by(name=name).first()
+  if program:
+    return jsonify({'message': f'{name} already exists'}), 400
+  
+  # programs=Program.query.all()
+  # programNames=[]
+  # for p in programs:
+  #   programNames.append(p.name)
+  # if name in programNames:
+  #   return jsonify({'message': 'Program already exists'}), 400
   
   if not isinstance(core, int):
             return jsonify({"error": "'core' must be an integer"}), 400
@@ -83,11 +88,8 @@ def addProgramRequirements():
     return jsonify({'message': 'You are unauthorized to perform this action. Please login with Staff credentials.'}), 401
 
   #verify program existance 
-  programs=Program.query.all()
-  programNames=[]
-  for p in programs:
-    programNames.append(p.name)
-  if name not in programNames:
+  program = get_program_by_name(name)
+  if not program:
     return jsonify({'message': 'Program does not exist'}), 400
   
   #verify that the course isn't already a requirement
@@ -131,7 +133,7 @@ def addCourse():
 
   username=current_user.username
   if not verify_staff(username):    #verify that the user is staff
-    return jsonify({'message': 'You are unauthorized to perform this action. Please login with Staff credentials.'}), 401
+    return jsonify({'message': f'{username} is unauthorized to perform this action. Please login with Staff credentials.'}), 401
 
   offeredCourses=get_all_OfferedCodes()
   courseCode=courseCode.replace(" ","").upper()   #ensure consistent course code format
@@ -144,4 +146,4 @@ def addCourse():
   if course:
      return jsonify(course.get_json()), 200
   else:
-    return jsonify({'message': "Course addition unsucessful"}), 400
+    return jsonify({'message': f"Course addition for {courseCode} unsucessful"}), 400

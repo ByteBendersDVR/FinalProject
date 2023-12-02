@@ -3,14 +3,13 @@ from App.controllers import get_course_by_courseCode
 from App.database import db
 
 def addSemesterCourses(courseCode):
-    course = get_course_by_courseCode(courseCode)
+    course = get_course_by_courseCode(courseCode)  # checks if the course exists
     if course:
         semCourses = CoursesOfferedPerSem(courseCode)
         db.session.add(semCourses)
         db.session.commit()
         return semCourses
-    else:
-        print("Course not found")
+    return 
 
 def delete_all_records():
     try:
