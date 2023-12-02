@@ -11,7 +11,7 @@ def create_staff(username, password, name):
 
 
 def verify_staff(username):
-    staff=Staff.query.filter_by(id=username).first()
+    staff=Staff.query.filter_by(username=username).first()
     if staff:
         return True
     return False

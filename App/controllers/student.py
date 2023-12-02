@@ -48,7 +48,7 @@ def enroll_in_programme(student_id, programme_id):
     return student.program_id
 
 def verify_student(username):
-    student=Student.query.filter_by(id=username).first()
+    student=Student.query.filter_by(username=username).first()
     if student:
         return True
     return False

@@ -15,7 +15,7 @@ from App.controllers import (
     get_course_by_courseCode,
     addCoursetoHistory,
     getCompletedCourseCodes,
-    generateCoursePlan,
+    generate_course_plan,
     verify_student
 )
 
@@ -25,23 +25,24 @@ student_views = Blueprint('student_views', __name__, template_folder='../templat
 @student_views.route('/student', methods=['POST'])
 def create_student_route():
     student_id = request.json['student_id']
+    username = request.json['username']
     password = request.json['password']
     name = request.json['name']
-    programname = request.json['programname']
+    programName = request.json['programName']
 
-    if not all([student_id, password, name, programname]):
+    if not all([student_id, username, password, name, programName]):
         return jsonify({'Error': 'Missing required fields. Please provide student id, password, name, and program name.'}), 400
 
     student = get_student_by_id(student_id)
     if student:
-        return jsonify({'Error': 'Student id found'}), 400
+        return jsonify({'Error': f'Student with id {student_id} already exists'}), 400
     
-    program = get_program_by_name(programname)
+    program = get_program_by_name(programName)
     if not program:
         return jsonify({'Error': 'Incorrect program name'}), 400
 
-    create_student(student_id, password, name, programname)
-    return jsonify({'Success!': f"user {student_id} created"}), 201
+    create_student(student_id, username, password, name, programName)
+    return jsonify({'Success!': f"Student {student_id} created"}), 201
     
 ##Add course to course history
 
@@ -53,7 +54,7 @@ def add_course_to_student_route():
 
     username=current_user.username
     if not verify_student(username):    #verify that the user is logged in
-        return jsonify({'message': 'You are unauthorized to perform this action. Please login with Student credentials.'}), 401
+        return jsonify({'message': f'{username} is unauthorized to perform this action. Please login with Student credentials.'}), 401
     
     if not student_id or not course_code:
         return jsonify({'Error': 'Missing required fields'}), 400
@@ -96,7 +97,7 @@ def create_student_plan_route():
     valid_command = ["electives", "easy", "fastest"]
 
     if command in valid_command:
-        courses = generateCoursePlan(student, command, student.program_id)
+        courses = generate_course_plan(student, command, student.program_id)
         return jsonify({'Success!': f"{command} plan added to student {student_id} ", "courses" : courses}), 200
 
     #I don't think we need this
