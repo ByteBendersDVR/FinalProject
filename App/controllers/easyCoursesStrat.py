@@ -1,7 +1,7 @@
 from App.controllers import (programCourses_SortedbyRating)
 
 
-def generateCoursePlan(programme):
+def generateCoursePlanEasy(programme):
     requiredCourses = []
 
     requiredCourses = programCourses_SortedbyRating(programme.id)
