@@ -14,6 +14,10 @@ def init():
     db.create_all()
     create_staff(1, "adminpass","999", "admin")
     createCoursesfromFile('testData/courseData.csv')
+    create_user('bob', 'bobpass')
+    create_program("Computer Science Major", 69, 15, 9)
+    create_student(816, "boo", "boopass", "Boon", "Computer Science Major")
+    create_staff(123,"admin", "adminstaff", "Jones")
     return jsonify(message='staff created, courses created, db initialized!')
 
 @index_views.route('/health', methods=['GET'])
