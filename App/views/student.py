@@ -99,10 +99,10 @@ def create_student_plan_route():
     valid_command = ["electives", "easy", "fastest"]
 
     if command in valid_command:
-        strategy = setStrategy(command)
+        courses = setStrategy(command, get_program_by_id(student.program_id))
 
-        if strategy:
-            courses = strategy.generateCoursePlan(get_program_by_id(student.program_id))
+        if courses:
+            # courses = strategy.generateCoursePlan(get_program_by_id(student.program_id))
 
             return jsonify({'Success!': f"{command} plan added to student {student_id} ", "courses": courses}), 200
         else:
