@@ -50,7 +50,7 @@ def initialize():
     createCoursesfromFile('testData/courseData.csv')
     create_program("Computer Science Major", 69, 15, 9)
     create_student(816, "boo", "boopass", "Boon", 1)
-    create_staff("admin", "adminstaff", "Jones")
+    create_staff(123,"admin", "adminstaff", "Jones")
     
     for c in test1:
         addCoursetoHistory(816, c, True)
@@ -158,11 +158,12 @@ Staff Commands
 '''
 staff_cli = AppGroup('staff',help='testing staff commands')
 @staff_cli.command("create",help="create staff")
-@click.argument("id", type=str)
+@click.argument("staff_id", type=str)
+@click.argument("username", type=str)
 @click.argument("password", type=str)
 @click.argument("name", type=str)
-def create_staff_command(id, password, name): 
-  newstaff=create_staff(password,id, name)
+def create_staff_command(staff_id, username, password, name): 
+  newstaff=create_staff(staff_id, username, password, name)
   print(f'Staff {newstaff.name} created')
 
 @staff_cli.command("addprogram",help='testing add program feature')

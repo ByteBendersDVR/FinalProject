@@ -2,8 +2,8 @@ from App.models import Student, CoursePlan, Program
 from App.controllers import (get_program_by_name, get_program_by_id)
 from App.database import db
 
-def create_student(student_id, username, password, name, program_id):
-    program = get_program_by_id(program_id)
+def create_student(student_id, username, password, name, programName):
+    program = get_program_by_name(programName)
     if program:
         new_student = Student(student_id, username, password, name, program.id)
         db.session.add(new_student)
