@@ -30,7 +30,7 @@ from App.controllers import (
     get_student_by_id
     )
 
-test1 = ["COMP1600",  "COMP1601", "COMP1602", "COMP1603", "COMP1604", "MATH1115", "INFO1600", "INFO1601",  "FOUN1101", "FOUN1105", "FOUN1301", "COMP3605", "COMP3606", "COMP3607", "COMP3608",]
+test1 = ["COMP1600",  "COMP1601", "COMP1602", "COMP1603", "COMP1604", "MATH1115", "INFO1600", "INFO1601",  "FOUN1101", "FOUN1105", "FOUN1301", "COMP3605", "COMP3606", "COMP3607", "COMP3608"]
 
 file_path = "testData/test.txt"
 
@@ -49,7 +49,7 @@ def initialize():
     create_user('bob', 'bobpass')
     createCoursesfromFile('testData/courseData.csv')
     create_program("Computer Science Major", 69, 15, 9)
-    create_student(816, "boo", "boopass", "Boon", 1)
+    create_student(816, "boo", "boopass", "Boon", "Computer Science Major")
     create_staff(123,"admin", "adminstaff", "Jones")
     
     for c in test1:
