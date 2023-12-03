@@ -15,8 +15,10 @@ from App.controllers import (
     get_course_by_courseCode,
     addCoursetoHistory,
     getCompletedCourseCodes,
-    generate_course_plan,
-    verify_student
+    verify_student,
+    get_program_by_id,
+    setStrategy,
+    generateCoursePlan
 )
 
 student_views = Blueprint('student_views', __name__, template_folder='../templates')
@@ -85,29 +87,28 @@ def create_student_plan_route():
     student_id = request.json['student_id']
     command = request.json['command']
 
-    username=current_user.username
-    if not verify_student(username):    #verify that the student is logged in
+    username = current_user.username
+    if not verify_student(username):  # verify that the student is logged in
         return jsonify({'message': 'You are unauthorized to perform this action. Please login with Student credentials.'}), 401
-    
+
     student = get_student_by_id(student_id)
 
     if not student:
         return jsonify({'Error': 'Student not found'}), 400
-    
+
     valid_command = ["electives", "easy", "fastest"]
 
     if command in valid_command:
-        courses = generate_course_plan(student, command, student.program_id)
-        return jsonify({'Success!': f"{command} plan added to student {student_id} ", "courses" : courses}), 200
+        strategy = setStrategy(command)
 
-    #I don't think we need this
-    # course = get_course_by_courseCode(command)
-    # if course:
-    #     addCourseToPlan(student, command)
-    #     return jsonify({'Success!': f"Course {command} added to student {student_id} plan"}), 200
-    
+        if strategy:
+            courses = strategy.generateCoursePlan(get_program_by_id(student.program_id))
+
+            return jsonify({'Success!': f"{command} plan added to student {student_id} ", "courses": courses}), 200
+        else:
+            return jsonify({'Error': 'Invalid strategy command'}), 400
+
     return jsonify("Invalid command. Please enter 'electives', 'easy' or 'fastest'"), 400
-
 
 
     
