@@ -5,6 +5,7 @@ def create_user(username, password):
     newuser = User(username=username, password=password)
     db.session.add(newuser)
     db.session.commit()
+    print("User created successfully")
     return newuser
 
 def get_user_by_username(username):

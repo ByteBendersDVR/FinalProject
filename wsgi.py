@@ -49,11 +49,11 @@ def initialize():
     create_user('bob', 'bobpass')
     createCoursesfromFile('testData/courseData.csv')
     create_program("Computer Science Major", 69, 15, 9)
-    create_student(816, "boo", "boopass", "Boon", "Computer Science Major")
+    create_student(816, "boo", "boopass", "Boon", 1)
     create_staff("admin", "adminstaff", "Jones")
     
     for c in test1:
-        addCoursetoHistory(816, c)
+        addCoursetoHistory(816, c, True)
     print('Student course history updated')
 
     with open(file_path, 'r') as file:
