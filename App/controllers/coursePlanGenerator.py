@@ -1,17 +1,18 @@
-from App.models import FastestGraduation, EasyCourses, PrioritizeElectives
+# from App.models import FastestGraduation, EasyCourses, PrioritizeElectives
 from App.database import db
-from App.controllers.strategy import generateCoursePlan
-
+from App.controllers.easyCoursesStrat import generateCoursePlanEasy
+from App.controllers.fastestGraduationStrat import generateCoursePlanFastest
+from App.controllers.prioritiseElectivesStrat import generateCoursePlanElectives
 # think this is how it should work
-def setStrategy(planOption):
+def setStrategy(planOption, programme):
    strategy = None
 
    if planOption == "fastest":
-      strategy = FastestGraduation()
+      strategy = generateCoursePlanEasy(programme)
    if planOption == "easy":
-      strategy = EasyCourses()
+      strategy = generateCoursePlanEasy(programme)
    if planOption == "electives":
-      strategy = PrioritizeElectives()
+      strategy = generateCoursePlanElectives(programme)
    
    return strategy
 
