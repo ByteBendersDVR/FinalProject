@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
 from App.models import db
-from App.controllers import (create_course, create_staff,createCoursesfromFile, create_user)
+from App.controllers import (create_course, create_staff,createCoursesfromFile, create_user, create_program, create_student)
 
 index_views = Blueprint('index_views', __name__, template_folder='../templates')
 
