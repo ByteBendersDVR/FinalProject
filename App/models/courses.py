@@ -4,7 +4,7 @@ import json
 
 class Course(db.Model):
     courseCode = db.Column(db.String(8), primary_key=True)
-    courseName = db.Column(db.String(25))
+    courseName = db.Column(db.String(80))
     credits = db.Column(db.Integer)
     rating = db.Column(db.Integer)
     #prerequisite_id = db.Column(db.ForeignKey('prerequisites.id'))
