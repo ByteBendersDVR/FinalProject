@@ -8,34 +8,25 @@ from werkzeug.security import generate_password_hash
 class StaffUnitTests(unittest.TestCase):
 
     def test_new_staff(self):
-        staffid = 999
-        staffName = "Jane Doe"
-        staffpass = "janepass"
-        staff = Staff(staffpass, staffid, staffName)
-        self.assertEqual(staff.name, staffName)
-        self.assertEqual(staff.id, staffid)
+        staff = Staff("jane", "janepass", "Jane Doe")
+        self.assertEqual(staff.name, "Jane Doe")
+        self.assertEqual(staff.id, None)
         
     def test_staff_toJSON(self):
-        staffid = 999
-        staffName = "Jane Doe"
-        staffpass = "janepass"
-
-        staff = Staff(staffpass, staffid, staffName)
+        staff = Staff("jane", "janepass", "Jane Doe")
         staff_json = staff.get_json()
 
-        self.assertDictEqual(staff_json, {
-            'staff_id': staffid,
-            'name': staffName,
-            })
+        self.assertDictEqual(staff_json, {"id": None, "username": "jane"})
     
     def test_set_password(self):
-        password = "mypass"
-        staff = Staff(password, 999, "Jane Doe")
+        password = "janepass"
+        staff = Staff("jane", password, "Jane Doe")
         assert staff.password != password
 
     def test_check_password(self):
-        password = "mypass"
-        staff = Staff(password, 999, "Jane Doe")
+        password = "janepass"
+        staff = Staff("jane", password, "Jane Doe")
+        assert staff.password != password
         assert staff.check_password(password)
 
 @pytest.fixture(autouse=True, scope="module")
@@ -47,13 +38,8 @@ def empty_db():
 
 class StaffIntegrationTests(unittest.TestCase):
     def test_create_staff(self):
-        staffid = 9
-        staffName = "Jane Doe"
-        staffpass = "janepass"
-        staff = create_staff(staffpass, staffid, staffName)
+        staff = create_staff("jane", "janepass", "Jane Doe")
 
-        assert staff is not None
-        assert get_staff_by_id(9) != None
-        
+        assert staff.name == "Jane Doe"
 
     

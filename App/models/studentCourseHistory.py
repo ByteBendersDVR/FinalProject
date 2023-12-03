@@ -5,7 +5,7 @@ class StudentCourseHistory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     studentID = db.Column(db.ForeignKey('student.id'))
     code = db.Column(db.ForeignKey('course.courseCode'))
-    passed = db.Column(db.Boolean, default = True)
+    passed = db.Column(db.Boolean, default = False)
 
     associated_course = db.relationship('Course', back_populates='students', overlaps="courses")
     associated_student = db.relationship('Student', back_populates='courses', overlaps="student")
@@ -17,7 +17,7 @@ class StudentCourseHistory(db.Model):
     
     def get_json(self):
         return{
-            'Program ID': self.id, #is this suppose to be id or program_id alone 
+            'Student ID': self.studentID, #is this suppose to be id or program_id alone 
             'Course Code': self.code,
             'Passed': self.passed
         }
