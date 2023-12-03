@@ -40,9 +40,12 @@ def login_action():
 
 @auth_views.route('/logout', methods=['GET'])
 def logout_action():
-    data = request.form
-    user = login(data['username'], data['password'])
-    return 'logged out!'
+    if current_user.is_authenticated:
+        # Logout the current user
+        logout_user()
+        return jsonify(message=f'User logged out successfully'), 200
+    else:
+        return jsonify(message='No user is currently logged in'), 401
 
 '''
 API Routes
@@ -66,6 +69,15 @@ def user_login_api():
   if not token:
     return jsonify(message='bad username or password given'), 401
   return jsonify(access_token=token)
+
+@auth_views.route('/api/logout', methods=['POST'])
+def user_logout_api():
+    if current_user.is_authenticated:
+        # Logout the current user
+        logout_user()
+        return jsonify(message='User logged out successfully'), 200
+    else:
+        return jsonify(message='No user is currently logged in'), 401
 
 @auth_views.route('/api/identify', methods=['GET'])
 @jwt_required()
