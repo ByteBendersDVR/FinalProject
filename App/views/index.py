@@ -12,7 +12,7 @@ def index_page():
 def init():
     db.drop_all()
     db.create_all()
-    create_staff("adminpass","999", "admin")
+    create_staff(1, "adminpass","999", "admin")
     createCoursesfromFile('testData/courseData.csv')
     return jsonify(message='staff created, courses created, db initialized!')
 
