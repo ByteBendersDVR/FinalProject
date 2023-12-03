@@ -4,7 +4,7 @@ from App.database import db
 
 def addSemesterCourses(courseCode):
     course = get_course_by_courseCode(courseCode)  # checks if the course exists
-    if not course:
+    if course:
         semCourses = CoursesOfferedPerSem(courseCode)
         db.session.add(semCourses)
         db.session.commit()
