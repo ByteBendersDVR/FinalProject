@@ -1,25 +1,25 @@
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 from App.database import db
 
-class Strategy(db.Model):
-    
-    id = db.Column(db.Integer, primary_key=True)
-    
+class Strategy(ABC):
     @abstractmethod
-    def choose_strategy(self):
+    def generateCoursePlan(self, programme):
         pass
-    
+
+# Sample subclass
 class FastestGraduation(Strategy):
-    
-    def choose_strategy(self):
-        return super().choose_strategy()
-    
+    def generateCoursePlan(self, programme):
+        # Implementation specific to FastestGraduation
+        pass
+
+# Another subclass
 class EasyCourses(Strategy):
-    
-    def choose_strategy(self):
-        return super().choose_strategy()
-    
+    def generateCoursePlan(self, programme):
+        # Implementation specific to EasyCourses
+        pass
+
+# Another subclass
 class PrioritizeElectives(Strategy):
-    
-    def choose_strategy(self):
-        return super().choose_strategy()
+    def generateCoursePlan(self, programme):
+        # Implementation specific to PrioritizeElectives
+        pass

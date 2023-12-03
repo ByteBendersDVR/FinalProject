@@ -1,6 +1,4 @@
 from App.controllers import (get_all_programCourses, get_allFoun)
-from App.models import Course, FastestGraduation
-from App.database import db 
 
 # fastest graduation, no electives 
 def generateCoursePlan(programme):
