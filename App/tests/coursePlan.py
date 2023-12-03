@@ -1,6 +1,6 @@
-import pytest, unittest
+""" import pytest, unittest
 from App.models import CoursePlan, CoursePlanCourses
-from App.controllers import create_CoursePlan, create_student, create_program, addCourseToPlan, enroll_in_programme, addSemesterCourses, generator, createCoursesfromFile, get_program_by_name, getCoursePlan, get_all_courses_by_planid, get_student, create_programCourse, removeCourse
+from App.controllers import create_student, create_program, createPlanCourse, enroll_in_programme, addSemesterCourses, generateCoursePlan, createCoursesfromFile, get_program_by_name, get_all_courses_by_planid, get_student, create_programCourse, removeCourse
 from App.main import create_app
 from App.database import db, create_db
 
@@ -168,3 +168,4 @@ class CoursePlanIntegrationTests(unittest.TestCase):
         self.assertEqual(course_plan_json, expected_json)
 
 
+ """

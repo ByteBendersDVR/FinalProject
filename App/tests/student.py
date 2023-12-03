@@ -31,14 +31,14 @@ LOGGER = logging.getLogger(__name__)
 class StudentUnitTest(unittest.TestCase):
 
     def test_new_student(self):
-        student = Student("01234", "johnpass", "John Doe", 1)
+        student = Student("01234", "johnpass", "password", "John Doe", 1)
         assert student.name == "John Doe"
 
     def test_student_toJSON(self):
-        student = Student("01234", "johnpass", "John Doe", 1)
+        student = Student("01234", "johnpass", "password", "John Doe", 1)
         student_json = student.get_json()
         self.assertDictEqual(
-            {"name": "John Doe", "student_id": "01234", "program": 1}, student_json)
+            {"id": None, "username": "johnpass"}, student_json)
 
 
 class StudentIntegrationTests(unittest.TestCase):
@@ -61,19 +61,21 @@ class StudentIntegrationTests(unittest.TestCase):
     def test_create_student(self):
         program = create_program("Computer Science Major", 3, 4, 5)
         student = create_student(
-            "01234", "johnpass", "John Doe", program.name)
+            "01234", "johnpass", "password", "John Doe", program.id)
         assert student.name == "John Doe"
 
     def test_get_all_student_json(self):
         program = create_program("Computer Science Major", 3, 4, 5)
-        create_student("01234", "johnpass", "John Doe", program.name)
+        student = create_student(
+            "01234", "johnpass", "password", "John Doe", program.id)
         users_json = get_all_students_json()
         self.assertListEqual(
-            [{"name": "John Doe", "student_id": "01234", "program": 1}], users_json)
+            [{"id": 1, "username": "johnpass"}], users_json)
 
     def test_update_student(self):
         program = create_program("Computer Science Major", 3, 4, 5)
-        create_student("01234", "johnpass", "John Doe", program.name)
+        student = create_student(
+            "01234", "johnpass", "password", "John Doe", program.id)
         student = update_student("01234", "Bill")
         assert student.name == "Bill"
 
@@ -107,9 +109,9 @@ class StudentIntegrationTests(unittest.TestCase):
     def test_enroll_in_programme(self):
         program = create_program("Computer Science Major", 3, 4, 5)
         student = create_student(
-            "01234", "johnpass", "John Doe", program.name)
-        enroll_in_programme(student.id, 1)
-        assert enroll_in_programme(student.id, 1) == 1
+            "01234", "johnpass", "password", "John Doe", program.id)
+        assert enroll_in_programme(student.student_id, program.id) == 1
+        #self.assertEqual(enroll_in_programme(student.student_id, program.id),1)
 
     # def test_view_course_plan(self):
     #     course_code = "MATH2250"

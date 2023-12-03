@@ -2,12 +2,12 @@ from App.models import StudentCourseHistory
 from App.controllers import (get_student_by_id, get_course_by_courseCode)
 from App.database import db
 
-def addCoursetoHistory(studentid, code):
+def addCoursetoHistory(studentid, code, passed):
     student  = get_student_by_id(studentid)
     if student:
         course = get_course_by_courseCode(code)
         if course:
-            completed = StudentCourseHistory(studentid, code, True)
+            completed = StudentCourseHistory(studentid, code, passed)
             db.session.add(completed)
             db.session.commit()
         else:
